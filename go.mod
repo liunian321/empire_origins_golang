@@ -1,4 +1,4 @@
-module go_crud_demo
+module empire_origins_golang
 
 go 1.24.5
 

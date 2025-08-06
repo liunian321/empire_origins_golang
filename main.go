@@ -3,9 +3,9 @@ package main
 import (
 	"os"
 
-	"go_crud_demo/config"
-	"go_crud_demo/db"
-	"go_crud_demo/router"
+	"empire_origins_golang/config"
+	"empire_origins_golang/db"
+	"empire_origins_golang/router"
 )
 
 func main() {

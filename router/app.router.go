@@ -1,7 +1,7 @@
 package router
 
 import (
-	"go_crud_demo/service"
+	"empire_origins_golang/service"
 
 	"github.com/gin-gonic/gin"
 )

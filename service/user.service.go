@@ -1,8 +1,8 @@
 package service
 
 import (
-	"go_crud_demo/db"
-	"go_crud_demo/model"
+	"empire_origins_golang/db"
+	"empire_origins_golang/model"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
