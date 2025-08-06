@@ -20,6 +20,8 @@ go.work
 # IDE files
 .vscode/
 .idea/
+.cursor/
+.trae/
 *.swp
 *.swo
 *~
@@ -70,4 +72,3 @@ coverage.html
 
 # Air live reload
 tmp/ 
-
