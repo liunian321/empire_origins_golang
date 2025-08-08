@@ -1,9 +1,9 @@
 package service
 
 import (
+	"empire_origins_golang/config"
 	"empire_origins_golang/db"
 	"empire_origins_golang/model"
-	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -58,7 +58,7 @@ func Login(c *gin.Context) {
 		"username": user.Username,
 		"order":    user.Order,
 		"cities":   mapElementIds,
-	}).SignedString([]byte(os.Getenv("JWT_SECRET")))
+	}).SignedString(config.JwtSecret)
 	if err != nil {
 		c.JSON(500, gin.H{"error": "Failed to generate token"})
 		return

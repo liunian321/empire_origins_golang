@@ -2,8 +2,13 @@ package config
 
 import (
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
+)
+
+var (
+	JwtSecret = []byte(os.Getenv("JWT_SECRET"))
 )
 
 /*

@@ -1,8 +1,8 @@
 package middleware
 
 import (
+	"empire_origins_golang/config"
 	"empire_origins_golang/model"
-	"os"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -33,7 +33,7 @@ func AuthMiddleware() gin.HandlerFunc {
 				return nil, jwt.ErrSignatureInvalid
 			}
 			// 返回 token 的密钥
-			return []byte(os.Getenv("JWT_SECRET")), nil
+			return config.JwtSecret, nil
 		})
 		if err != nil {
 			c.JSON(403, gin.H{"message": "Forbidden"})
