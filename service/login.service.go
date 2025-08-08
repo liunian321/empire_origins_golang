@@ -20,7 +20,7 @@ func Login(c *gin.Context) {
 	}
 
 	// 2. 查询用户,检验是否存在
-	user, err := gorm.G[model.User](db.DB).Select("id, password, order, username").Where("username = ?", loginUser.Username).First(c)
+	user, err := gorm.G[model.User](db.DB).Select("id, password, \"order\", username").Where("username = ?", loginUser.Username).First(c)
 	if err != nil {
 		c.JSON(404, gin.H{"error": "User not found"})
 		return
@@ -47,12 +47,12 @@ func Login(c *gin.Context) {
 		mapElementIds[i] = city.MapElementId
 	}
 
-	// 检查用户是否有城市
 	if len(mapElementIds) == 0 {
 		c.JSON(500, gin.H{"error": "User has no cities"})
 		return
 	}
 
+	// 6. 生成 token
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":       user.ID,
 		"username": user.Username,
@@ -64,5 +64,9 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"token": token})
+	c.JSON(200, gin.H{"token": model.AddUserResponse{
+		UserId:       user.ID,
+		AccessToken:  token,
+		MapElementId: mapElementIds[0],
+	}})
 }

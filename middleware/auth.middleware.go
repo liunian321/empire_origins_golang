@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"empire_origins_golang/model"
-	"fmt"
 	"os"
 	"strings"
 
@@ -45,7 +44,6 @@ func AuthMiddleware() gin.HandlerFunc {
 		userInfo := token.Claims.(model.UserInfo)
 		// 5. 将用户信息添加到上下文
 		c.Set("userInfo", userInfo)
-		fmt.Println(userInfo)
 		// 6. 继续处理请求
 		c.Next()
 	}

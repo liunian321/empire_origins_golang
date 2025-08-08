@@ -21,10 +21,7 @@ func SetupRouter() *gin.Engine {
 	}
 	userRouter.Use(middleware.AuthMiddleware())
 
-	loginRouter := router.Group("/login")
-	{
-		loginRouter.POST("/", service.Login)
-	}
+	router.POST("/login", service.Login)
 
 	// 3. 返回路由实例
 	return router
