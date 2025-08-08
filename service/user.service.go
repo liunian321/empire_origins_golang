@@ -3,6 +3,7 @@ package service
 import (
 	"empire_origins_golang/config"
 	"empire_origins_golang/db"
+	"empire_origins_golang/dto"
 	"empire_origins_golang/model"
 	"time"
 
@@ -47,7 +48,7 @@ func GetUser(c *gin.Context) {
 // @Param   loginUser     body    model.LoginUser     true  "登录用户"
 func Login(c *gin.Context) {
 	// 1. 校验请求参数
-	loginUser := model.LoginUser{}
+	loginUser := dto.LoginUser{}
 	if err := c.ShouldBindJSON(&loginUser); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -78,7 +79,7 @@ func Login(c *gin.Context) {
 	// 5. 生成 token
 	mapElementIds := make([]string, len(cities))
 	for i, city := range cities {
-		mapElementIds[i] = city.MapElementId
+		mapElementIds[i] = city.MapElementID
 	}
 
 	if len(mapElementIds) == 0 {
@@ -98,7 +99,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"token": model.AddUserResponse{
+	c.JSON(200, gin.H{"token": dto.AddUserResponse{
 		UserId:       user.ID,
 		AccessToken:  token,
 		MapElementId: mapElementIds[0],
@@ -106,7 +107,7 @@ func Login(c *gin.Context) {
 }
 
 func Register(c *gin.Context) {
-	registerUser := model.LoginUser{}
+	registerUser := dto.LoginUser{}
 	if err := c.ShouldBindJSON(&registerUser); err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})
 		return

@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"empire_origins_golang/config"
-	"empire_origins_golang/model"
+	"empire_origins_golang/dto"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -41,7 +41,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 		// 4. 获取用户信息
-		userInfo := model.UserInfo{
+		userInfo := dto.UserInfo{
 			ID:           token.Claims.(jwt.MapClaims)["id"].(string),
 			MapElementId: token.Claims.(jwt.MapClaims)["cities"].([]string)[0],
 		}

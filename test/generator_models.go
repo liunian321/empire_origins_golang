@@ -7,11 +7,14 @@ import (
 	"gorm.io/gen"
 )
 
+/*
+用于生成 model 文件
+*/
 func main() {
 	config.LoadEnv()
 	// 创建生成器
 	g := gen.NewGenerator(gen.Config{
-		OutPath: "./models",           // 生成的 model 文件输出路径
+		OutPath: "./model",           // 生成的 model 文件输出路径
 		Mode:    gen.WithDefaultQuery, // 生成默认查询方法
 	})
 
