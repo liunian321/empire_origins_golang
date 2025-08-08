@@ -27,7 +27,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 		// 3. 验证 token
 		token_string := parts[1]
-		token, err := jwt.ParseWithClaims(token_string, model.UserInfo{}, func(token *jwt.Token) (any, error) {
+		token, err := jwt.ParseWithClaims(token_string, jwt.MapClaims{}, func(token *jwt.Token) (any, error) {
 			// 验证 token 的签名方法
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, jwt.ErrSignatureInvalid
@@ -41,7 +41,10 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 		// 4. 获取用户信息
-		userInfo := token.Claims.(model.UserInfo)
+		userInfo := model.UserInfo{
+			ID:           token.Claims.(jwt.MapClaims)["id"].(string),
+			MapElementId: token.Claims.(jwt.MapClaims)["cities"].([]string)[0],
+		}
 		// 5. 将用户信息添加到上下文
 		c.Set("userInfo", userInfo)
 		// 6. 继续处理请求
