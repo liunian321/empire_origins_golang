@@ -8,9 +8,15 @@ import (
 	"gorm.io/gorm"
 )
 
-/*
-获取用户信息
-*/
+// @Summary 获取用户信息
+// @Description 根据 ID 返回用户详情
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param   id     path    int     true  "用户ID"
+// @Success 200 {object} model.User
+// @Failure 400 {string} string "Bad request"
+// @Router /users/{id} [get]
 func GetUser(c *gin.Context) {
 	id := c.Query("id")
 	// 1. 检查请求参数

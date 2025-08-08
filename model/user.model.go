@@ -1,6 +1,8 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
 	ID        string    `json:"id" gorm:"primaryKey"`
@@ -18,4 +20,15 @@ type User struct {
 */
 func (u *User) TableName() string {
 	return "user"
+}
+
+type LoginUser struct {
+	Username string `json:"username" binding:"required,min=1,max=16"`
+	Password string `json:"password" binding:"required,min=8,max=32"`
+}
+
+type AddUserResponse struct {
+	UserId       string `json:"user_id"`
+	AccessToken  string `json:"access_token"`
+	MapElementId string `json:"map_element_id"`
 }

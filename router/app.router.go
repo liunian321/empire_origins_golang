@@ -1,6 +1,7 @@
 package router
 
 import (
+	"empire_origins_golang/middleware"
 	"empire_origins_golang/service"
 
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,12 @@ func SetupRouter() *gin.Engine {
 	userRouter := router.Group("/user")
 	{
 		userRouter.GET("/info", service.GetUser)
+	}
+	userRouter.Use(middleware.AuthMiddleware())
+
+	loginRouter := router.Group("/login")
+	{
+		loginRouter.POST("/", service.Login)
 	}
 
 	// 3. 返回路由实例

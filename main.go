@@ -6,6 +6,9 @@ import (
 	"empire_origins_golang/config"
 	"empire_origins_golang/db"
 	"empire_origins_golang/router"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -24,6 +27,10 @@ func main() {
 		port = "6001"
 	}
 
-	// 5. 启动服务器, 并且监听端口
+	// 5. 设置 swagger 文档地址
+	url := ginSwagger.URL("http://localhost:" + port + "/swagger/doc.json")
+	router.SetupRouter().GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+
+	// 6. 启动服务器, 并且监听端口
 	router.SetupRouter().Run(":" + port)
 }
