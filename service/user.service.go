@@ -128,4 +128,16 @@ func Register(c *gin.Context) {
 	user.ID = uuid.New().String()
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
+	err = gorm.G[model.User](db.DB).Create(c, &user)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Failed to create user"})
+		return
+	}
+
+	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"id":       user.ID,
+		"username": user.Username,
+		"order":    user.Order,
+	}).SignedString(config.JwtSecret)
+	c.JSON(200, gin.H{"token": token})
 }
