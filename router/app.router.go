@@ -1,8 +1,9 @@
 package router
 
 import (
+	cityService "empire_origins_golang/city"
 	"empire_origins_golang/middleware"
-	"empire_origins_golang/service"
+	userService "empire_origins_golang/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,14 +16,23 @@ func SetupRouter() *gin.Engine {
 	router := gin.New()
 
 	// 2. 设置路由, 当用户访问/user时, 调用service.GetUser函数
-	userRouter := router.Group("/user")
 	{
-		userRouter.GET("/info", service.GetUser)
+		userRouter := router.Group("/user")
+		{
+			userRouter.GET("/info", userService.GetUser)
+		}
+		router.POST("/login", userService.Login)
+		router.POST("/register", userService.Register)
+		userRouter.Use(middleware.AuthMiddleware())
 	}
-	userRouter.Use(middleware.AuthMiddleware())
 
-	router.POST("/login", service.Login)
-	router.POST("/register", service.Register)
+	{
+		cityRouter := router.Group("/city")
+		{
+			cityRouter.GET("/info", cityService.CityInfo)
+		}
+		cityRouter.Use(middleware.AuthMiddleware())
+	}
 
 	// 3. 返回路由实例
 	return router
